@@ -33,6 +33,35 @@ glance(m_bty)$adj.r.squared
 
 ### Exercise 2
 
-...
+score = bty_avg(.074) + gender(.172)
 
-Add exercise headings as needed.
+R2 = 5.9%
+Adjusted R2 = 5.5%
+
+```{r model-two}
+
+m_bty_gen <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ bty_avg + gender, data = evals)
+
+tidy(m_bty_gen)
+
+glance(m_bty_gen)$r.squared
+glance(m_bty_gen)$adj.r.squared
+
+```
+
+
+### Exercise 3
+
+Holding gender constant, a one unit increase in a professor's beauty rating predicts a .07 unit increase in their course evaluations. 
+
+Holding beauty constant, male professors tend to receive course evaluations that are .17 points higher than female professors.
+
+### Exercise 4
+
+5.5% of the total variance in course evaluation scores is explained by the professor's beauty and gender.
+
+### Exercise 5
+
+

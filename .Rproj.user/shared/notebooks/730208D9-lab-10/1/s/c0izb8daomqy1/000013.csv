@@ -1,6 +1,0 @@
-"0",""
-"0","m_bty <- linear_reg() %>%"
-"0","  set_engine (""lm"") %>%"
-"0","  fit(score ~ bty_avg, data = evals)"
-"0",""
-"0","tidy(m_bty)"
