@@ -89,11 +89,41 @@ m_bty_gen_int <- linear_reg() %>%
   set_engine("lm") %>%
   fit(score ~ bty_avg + gender + bty_mcentered*gender, data = evals)
 
-tidy(m_bty_gen)
+tidy(m_bty_gen_int)
 ```
 
 
 ### Exercise 8
 
-The r-squared values are larger when considering gender in addition to beauty, rather than beauty as the sole predictor of course evaluations. This suggests that 
+The r-squared values are larger when considering gender (R2 = .055) in addition to beauty, rather than beauty as the sole predictor of course evaluations (R2 = .032). This suggests that there is unique variance explained by gender above and beyond what is explained by beauty.
+
+### Exercise 9
+
+m_bty: b = .066
+m_bty_gen: b = .074
+
+Adding gender as a predictor has increased the slope of beauty as a predictor of course evaluations.
+
+### Exercise 10
+
+y = bty_avg(.064) + rank_ten(-.04)
+
+In order to interpret rank as a predictor, I turned that variable into a from three categorical options (tenured, tenure track, and teaching) to a dichotomous categorical variable: tenured professors, vs. non-tenured professors.
+
+Holding rank constant, a one point increase in a professor's beauty score leads to a .064 increase in their course evaluations.
+
+Holding beauty constant, there is no significant effect of tenure on course evaluations.
+
+```{r rank}
+
+evals <- evals %>%
+  mutate(rank_ten = case_when(rank == "tenure track" ~ "non-tenured", rank == "teaching" ~ "non-tenured", rank == "tenured" ~ "tenured"))
+
+m_bty_rank <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ bty_avg + rank_ten, data = evals)
+
+tidy(m_bty_rank)
+```
+
 
