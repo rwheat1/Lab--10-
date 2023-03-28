@@ -54,9 +54,12 @@ glance(m_bty_gen)$adj.r.squared
 
 ### Exercise 3
 
-Holding gender constant, a one unit increase in a professor's beauty rating predicts a .07 unit increase in their course evaluations. 
+b1: Holding gender constant, a one unit increase in a professor's beauty rating predicts a .07 unit increase in their course evaluations. 
 
-Holding beauty constant, male professors tend to receive course evaluations that are .17 points higher than female professors.
+b2: Holding beauty constant, male professors tend to receive course evaluations that are .17 points higher than female professors.
+
+Intercept: A female professor with a beauty rating of 0 will receive a 3.74 rating in their course evals.
+
 
 ### Exercise 4
 
@@ -64,4 +67,33 @@ Holding beauty constant, male professors tend to receive course evaluations that
 
 ### Exercise 5
 
+Equation for the Line for Male Professors:
+y = 3.91 + .07(bty_avg)
+
+### Exercise 6
+
+Holding beauty constant, male professors tend to have higher course evaluations than female professors.
+
+### Exercise 7
+
+The relationship between beauty and course evaluations is stronger for male professors than female professors, over and above beauty and gender themselves as predictors. In other words, when a professor is male, beauty matters more for determining their course evaluations.
+
+```{r interaction}
+
+#create an interaction term
+
+evals <- evals %>%
+  mutate(bty_mcentered = bty_avg - mean(bty_avg))
+
+m_bty_gen_int <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ bty_avg + gender + bty_mcentered*gender, data = evals)
+
+tidy(m_bty_gen)
+```
+
+
+### Exercise 8
+
+The r-squared values are larger when considering gender in addition to beauty, rather than beauty as the sole predictor of course evaluations. This suggests that 
 
