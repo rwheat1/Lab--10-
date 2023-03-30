@@ -1,0 +1,6 @@
+"0",""
+"0","m_bty_cred <- linear_reg() %>%"
+"0","  set_engine(""lm"") %>%"
+"0","  fit(score ~ cls_credits, data = evals)"
+"0",""
+"0","tidy(m_bty_cred)"

@@ -1,0 +1,6 @@
+"0",""
+"0","m_bty_full <- linear_reg() %>%"
+"0","  set_engine(""lm"") %>%"
+"0","  fit(score ~ rank + ethnicity + gender + language + age + cls_perc_eval + cls_students + cls_level + cls_profs + cls_credits + bty_avg, data = evals)"
+"0",""
+"0","tidy(m_bty_full)"

@@ -90,6 +90,7 @@ m_bty_gen_int <- linear_reg() %>%
   fit(score ~ bty_avg + gender + bty_mcentered*gender, data = evals)
 
 tidy(m_bty_gen_int)
+glance(m_bty_gen_int)$adj.r.squared
 ```
 
 
@@ -124,6 +125,79 @@ m_bty_rank <- linear_reg() %>%
   fit(score ~ bty_avg + rank_ten, data = evals)
 
 tidy(m_bty_rank)
+glance(m_bty_rank)$adj.r.squared
 ```
 
+## Part 3
 
+### Exercise 11
+
+Of the variables in this dataframe, I would expect cls_credits to not be associated with professor evaluations at all. I just don't see any way how the number of credits a class is worth would impact how people viewed the professor in the course. Furthermore, most classes are multicredit, so I'm not sure much variance will be explained by variance in cls_credits.
+
+### Exercise 12
+
+I seem to be wrong here. Classes with one credit received higher course evaluations (b = .047) than classes that count for multiple credits. This variable alone explains 4% of the variance in course evalutions.
+
+```{r cls-credit}
+
+m_bty_cred <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ cls_credits, data = evals)
+
+tidy(m_bty_cred)
+glance(m_bty_cred)$adj.r.squared
+```
+
+### Exercise 13
+
+If you are going to include cls_perc_eval and cls_students, there is no need to include cls_did_eval because the information you'd receive from that variable is redundant with the information provided by those other two variables. This may lead to quite a bit of collinearity, which can make our results a bit weird.
+
+### Exercise 14
+
+```{r full-model}
+
+m_bty_full <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ rank + ethnicity + gender + language + age + cls_perc_eval + cls_students + cls_level + cls_profs + cls_credits + bty_avg, data = evals)
+
+tidy(m_bty_full)
+glance(m_bty_full)$adj.r.squared
+```
+
+### Exercise 15
+
+After playing around with different sets of predictors, I've settled on the following model that is much simpler than the full model, but does not lose predictive power (and in fact, the adjusted R2 is larger).
+
+y = ethnicity(.20) + gender(.18) + language(-.16) + age(-.005) + cls_percent_eval(.005) + cls_credits(.51) + bty_avg(.06)
+
+```{r backwards-select}
+
+m_bty_full <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(score ~ ethnicity + gender + language + age + cls_perc_eval + cls_credits + bty_avg, data = evals)
+
+tidy(m_bty_full)
+glance(m_bty_full)$adj.r.squared
+
+```
+
+### Exercise 16
+
+Categorical variable interpretation: Holding all other predictors constant, professors for which English is not their native language tend to receive .16 worse course eval scores than those who are native English speakers.
+
+Continuous variable interpretation: Holding all other predictors constant, a one unit increase in a professor's average beauty rating is associated with a .06 increase in their corresponding course evaluation scores.
+
+### Exercise 17
+
+According to our models, the professor most likely to receive positive course evaluations would be (looking at the betas for the significant predictors):
+1. Not a minority
+2. Male
+3. Young
+4. Attractive
+
+The class would be:
+1. One credit
+
+### Exercise 18
+
+I would be tentatively willing to generalize most of these results to other universities. Certainly, the biases that lead the characteristics of these professors to be valued are not specific to the University of Texas. However, I would be willing to bet that there may be additional idiosyncratic factors that may matter for determining course evaluations depending on the institution. For instance, courses are structured differently at different institutions: some places do not go by the traditional semester-based academic calendar, others do. How might this impact evaluations? It's unclear. Thus, I think the current significant predictors matter for course evaluations at other universities, but there may be additional things that matter at those other schools as well.

@@ -3,7 +3,7 @@
     "path": "~/GitHub/Labs 2023/Lab--10-/lab-10.Rmd",
     "project_path": "lab-10.Rmd",
     "type": "r_markdown",
-    "hash": "86793015",
+    "hash": "1632029561",
     "contents": "",
     "dirty": false,
     "created": 1679408701791.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "114,88",
-        "scrollLine": "111"
+        "cursorPosition": "202,778",
+        "scrollLine": "197"
     },
     "folds": "",
-    "lastKnownWriteTime": 1680013086,
+    "lastKnownWriteTime": 1680186244,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1680013093102,
+    "last_content_update": 1680186244928,
     "read_only": false,
     "read_only_alternatives": []
 }
